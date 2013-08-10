@@ -20,34 +20,41 @@
 	<script src="https://github.com/downloads/processing-js/processing-js/processing-1.4.1.js"></script>
 	<script type="text/processing" data-processing-target="pjs">
 
+	// the number of FFT bands we want to receive
 	int numberOfBands = 32;
-	float[] fft = new float[numberOfBands];
-
-	void setup(){
-		background(0);
-		size( 500, 350 );
-		frameRate(60);
-	}
-	
+	// if we don't create a getter like this, we will not
+	// be able to retrieve sketch.numberOfBands from the external js
 	int numberOfBands(){
 		return numberOfBands;
 	}
 	
+	// this array will hold the audio data
+	float[] fft = new float[numberOfBands];
+
+	void setup(){
+		// I've noticed that performance degrades quickly with a larger canvas
+		size( 500, 350 );
+		background(0);
+		frameRate(60);
+	}
+	
+	// call this method from within the audio data callback
 	void updateData(float[] newFFT){
 		fft = newFFT;
 	}
 	
-	// Main draw loop
+	// draw the bars
 	void draw(){
 		background(0);
 		float barWidth = ceil(width / (float)numberOfBands);
+
 		beginShape();
 		vertex(0, height);
 		for(int i = 0; i < numberOfBands; i++){
 			float x = i * barWidth;
 			float y = height;
 			float w = barWidth;
-			float h = map(fft[i], -100, 10, 0, -height);
+			float h = map(fft[i], -100, 10, 0, -height);	// audio data seems to have about this range
 
 			vertex(x, y + h);
 			vertex(x + w, y + h);
