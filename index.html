@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Visualizer</title>
+    <!-- Include the stylesheets you need for the Views components -->
+    <!-- See https://developer.spotify.com/technologies/apps/docs/preview/views/ -->
+    <link rel="stylesheet" href="$views/css/image.css">
+    <link rel="stylesheet" href="$views/css/list.css">
+    <link rel="stylesheet" href="$views/css/buttons.css">
+    <!-- <link rel="stylesheet" href="$views/css/throbber.css"> -->
+    <link rel="stylesheet" href="css/style.css">
+    <!-- If you are using the preview SDK for webplayer then uncomment the script below -->
+    <!--script src="http://d1hza3lyffsoht.cloudfront.net/preview-sdk/bootstrap.js"></script-->
+  </head>
+  <body>
+    <h1></h1>
+    
+	<script src="https://github.com/downloads/processing-js/processing-js/processing-1.4.1.js"></script>
+	<script type="text/processing" data-processing-target="pjs">
+
+	int numberOfBands = 32;
+	float[] fft = new float[numberOfBands];
+
+	void setup(){
+		background(0);
+		size( 500, 350 );
+		frameRate(60);
+	}
+	
+	int numberOfBands(){
+		return numberOfBands;
+	}
+	
+	void updateData(float[] newFFT){
+		fft = newFFT;
+	}
+	
+	// Main draw loop
+	void draw(){
+		background(0);
+		float barWidth = ceil(width / (float)numberOfBands);
+		beginShape();
+		vertex(0, height);
+		for(int i = 0; i < numberOfBands; i++){
+			float x = i * barWidth;
+			float y = height;
+			float w = barWidth;
+			float h = map(fft[i], -100, 10, 0, -height);
+
+			vertex(x, y + h);
+			vertex(x + w, y + h);
+		}
+		vertex(width, height);
+		endShape();
+	}
+	</script>
+	<canvas id="pjs"></canvas>
+    
+    <script src="scripts/main.js"></script>
+  </body>
+</html>
