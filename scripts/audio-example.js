@@ -4,7 +4,7 @@ require([
 ], function(models, audio) {
   'use strict';
 
-  var drawFFT = function() {  
+  var startFFT = function() {  
 	var analyzer = audio.RealtimeAnalyzer.forPlayer(models.player);
 	analyzer.addEventListener('audio', function(data){
 		var pjs = Processing.getInstanceById('pjs');
@@ -26,5 +26,5 @@ require([
 	});
 };
 
-  exports.drawFFT = drawFFT;
+  exports.startFFT = startFFT;
 });

@@ -1,8 +1,8 @@
 require([
   'scripts/audio-example'
-], function(models, audioExample) {
+], function(audioExample) {
   'use strict';
 
-  audioExample.drawFFT();
+  audioExample.startFFT();
 
 });
