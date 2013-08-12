@@ -13,7 +13,7 @@
   "AppName": {
     "en": "Audio FFT"
   },
-  "BundleIdentifier": "audio-fft-processingjs",
+  "BundleIdentifier": "audio-fft-processing",
   "BundleType": "Application",
   "BundleVersion": "0.0.1",
   "Dependencies": {
